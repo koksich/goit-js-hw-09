@@ -17,8 +17,6 @@ const refs = {
 };
 
 refs.startBtn.disabled = true;
-refs.cleanBtn.disabled = true;
-
 refs.startBtn.addEventListener('click', onStartBtnClick);
 
 flatpickr(refs.input, {
@@ -50,7 +48,6 @@ function startBtnActivation() {
 function onStartBtnClick() {
   refs.input.disabled = true;
   refs.startBtn.disabled = true;
-  refs.cleanBtn.disabled = false;
 
   timerId = setInterval(() => {
     timeDiff -= TIMER_STEP;
