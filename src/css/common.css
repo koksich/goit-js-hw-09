@@ -27,6 +27,7 @@ img {
   border-radius: 50px;
   font-size: 32px;
   box-shadow: 2px 10px 15px -5px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
 }
 
 .btn:first-child {
