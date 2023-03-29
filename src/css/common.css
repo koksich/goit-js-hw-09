@@ -33,3 +33,26 @@ img {
 .btn:first-child {
   margin-right: 25px;
 }
+
+/* task-02 */
+.timer_btn {
+  padding: 5px 10px;
+  border: 2px solid #5b595c;
+  border-radius: 50px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.timer {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.value {
+  font-size: 25px;
+}
