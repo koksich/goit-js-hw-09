@@ -7,21 +7,21 @@ let timerId = null;
 let date = null;
 let timeDiff = 0;
 
-const inputEl = document.querySelector('#datetime-picker');
-const startBtn = document.querySelector('button[data-start]');
-const cleanBtn = document.querySelector('button[data-clean]');
-const days = document.querySelector('[data-days]');
-const hours = document.querySelector('[data-hours]');
-const minutes = document.querySelector('[data-minutes]');
-const seconds = document.querySelector('[data-seconds]');
+const refs = {
+  input: document.querySelector('#datetime-picker'),
+  startBtn: document.querySelector('button[data-start]'),
+  days: document.querySelector('span[data-days]'),
+  hours: document.querySelector('span[data-hours]'),
+  minutes: document.querySelector('span[data-minutes]'),
+  seconds: document.querySelector('span[data-seconds]'),
+};
 
-startBtn.disabled = true;
-cleanBtn.disabled = true;
+refs.startBtn.disabled = true;
+refs.cleanBtn.disabled = true;
 
-startBtn.addEventListener('click', onStartBtnClick);
-cleanBtn.addEventListener('click', onCleanBtnClick);
+refs.startBtn.addEventListener('click', onStartBtnClick);
 
-flatpickr(inputEl, {
+flatpickr(refs.input, {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
@@ -36,36 +36,40 @@ function startBtnActivation() {
   const currentDate = Date.now();
   const selectedDate = new Date(date).getTime();
 
-  timeDiff = selectedDate - currentDate;
-  startBtn.disabled = false;
-
-  if (currentDate > selectedDate) {
+  if (selectedDate < currentDate) {
     Notiflix.Notify.failure('Please choose a date in the future');
-    startBtn.disabled = true;
+    refs.startBtn.disabled = true;
+    date = null;
     return;
   }
+
+  timeDiff = selectedDate - currentDate;
+  refs.startBtn.disabled = false;
 }
 
 function onStartBtnClick() {
-  inputEl.disabled = true;
-  startBtn.disabled = true;
-  cleanBtn.disabled = false;
+  refs.input.disabled = true;
+  refs.startBtn.disabled = true;
+  refs.cleanBtn.disabled = false;
 
   timerId = setInterval(() => {
     timeDiff -= TIMER_STEP;
-    const timeElements = converMs(timeDiff);
-    updateClockFace(timeElements);
+    const timeComp = convertMs(timeDiff);
+    updateClockface(timeComp);
   }, TIMER_STEP);
 }
 
-function updateClockFace(obj) {
-    const { days, hours, minutes, seconds } = obj;
-    days.textContent = `${}`
+function updateClockface(obj) {
+  const { days, hours, minutes, seconds } = obj;
+  refs.days.textContent = `${addLeadingZero(days)}`;
+  refs.hours.textContent = `${addLeadingZero(hours)}`;
+  refs.minutes.textContent = `${addLeadingZero(minutes)}`;
+  refs.seconds.textContent = `${addLeadingZero(seconds)}`;
 }
 
-function addLeadingZero(value)
-
-function onCleanBtnClick() {}
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
+}
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
