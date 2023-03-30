@@ -10,6 +10,10 @@ function handlerSubmitForm(event) {
   const step = Number(event.currentTarget.step.value);
   const amount = Number(event.currentTarget.amount.value);
 
+  creatMltplPromises(delay, step, amount);
+}
+
+function creatMltplPromises(delay, step, amount) {
   let amountDelay = delay;
 
   for (let i = 1; i <= amount; i += 1) {
@@ -23,18 +27,18 @@ function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (shouldResolve) {
-        resolve(position, delay);
+        resolve({ position, delay });
       } else {
-        reject(position, delay);
+        reject({ position, delay });
       }
     }, delay);
   });
 }
 
-function onResolve(position, delay) {
+function onResolve({ position, delay }) {
   Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
 }
 
-function onReject(position, delay) {
+function onReject({ position, delay }) {
   Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
 }
