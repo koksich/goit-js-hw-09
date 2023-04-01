@@ -11,6 +11,8 @@ function handlerSubmitForm(event) {
   const amount = Number(event.currentTarget.amount.value);
 
   creatMltplPromises(delay, step, amount);
+
+  event.currentTarget.reset();
 }
 
 function creatMltplPromises(delay, step, amount) {
