@@ -52,6 +52,13 @@ function onStartBtnClick() {
   timerId = setInterval(() => {
     timeDiff -= TIMER_STEP;
     const timeComp = convertMs(timeDiff);
+
+    if (timeDiff < 0) {
+      clearInterval(timerId);
+      refs.input.disabled = false;
+      return;
+    }
+
     updateClockface(timeComp);
   }, TIMER_STEP);
 }
